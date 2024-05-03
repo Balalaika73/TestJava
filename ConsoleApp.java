@@ -2,7 +2,7 @@ import java.util.Scanner;
 public class Array35 {
     public static void main(String[] args) {
         System.out.println("Введите размер массива: ");
-        Scanner r = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         int N = input.nextInt();
         int[] mas = new int[N];
         System.out.println("Заполните массив: ");
