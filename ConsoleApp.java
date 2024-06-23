@@ -1,43 +1,98 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-public class Array35 {
+
+// Класс, представляющий сотрудника
+class Employee {
+    private String name;
+    private int age;
+    private double salary;
+
+    public Employee(String name, int age, double salary) {
+        this.name = name;
+        this.age = age;
+        this.salary = salary;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", salary=" + salary +
+                '}';
+    }
+}
+
+// Класс, представляющий компанию
+class Company {
+    private String name;
+    private List<Employee> employees;
+
+    public Company(String name) {
+        this.name = name;
+        this.employees = new ArrayList<>();
+    }
+
+    public void hireEmployee(Employee employee) {
+        employees.add(employee);
+    }
+
+    public void displayEmployees() {
+        System.out.println("Employees of " + name + ":");
+        for (Employee employee : employees) {
+            System.out.println(employee);
+        }
+    }
+}
+
+public class CompanyManagementSystem {
     public static void main(String[] args) {
-        System.out.println("Введите размер массива: ");
-        Scanner input = new Scanner(System.in);
-        int N = input.nextInt();
-        int[] mas = new int[N];
-        System.out.println("Заполните массив: ");
-        for (int i = 0; i < N; i++) {
-            int n = input.nextInt();
-            mas[i] = n;
-        }
-        int[] min = new int[N];
-        min[0] = mas[0];
-        int c = 1;
-        for (int i : mas) System.out.printf("%d ", i);
-        System.out.printf("\n");
-        for (int i = 1; i < N - 1; i++) {
-            if ((mas[i] > mas[i + 1]) && (mas[i] > mas[i - 1])) {
-                if (mas[i] > min[c]) {
-                    System.out.println(mas[i]);
-                    min[c] = mas[i];
-                    c++;
-                }
-            }
-            if (mas[i+1] == mas[N-1]) {
-                if (mas[i] > mas[i - 1]) {
-                    min[c] = mas[i];
-                    c++;
-                }
-            }
-        }
-        //for (int j : min) System.out.printf("%d ", j);
-        int min1 = min[0];
-        for (int j = 0; j <= c - 1; j++) {
-            //System.out.println(min[j]+' '+min1);
-            if (min[j] < min1) {
-                min1 = min[j];
+        Scanner scanner = new Scanner(System.in);
+        
+        // Создаем компанию
+        Company company = new Company("Tech Solutions");
+
+        while (true) {
+            // Запрашиваем данные сотрудника у пользователя
+            System.out.print("Введите имя сотрудника: ");
+            String name = scanner.nextLine();
+
+            System.out.print("Введите возраст сотрудника: ");
+            int age = scanner.nextInt();
+
+            System.out.print("Введите зарплату сотрудника: ");
+            double salary = scanner.nextDouble();
+            scanner.nextLine(); // Чтение символа новой строки после nextDouble()
+
+            // Создаем нового сотрудника и добавляем его в компанию
+            Employee employee = new Employee(name, age, salary);
+            company.hireEmployee(employee);
+
+            // Спрашиваем пользователя, хочет ли он ввести еще одного сотрудника
+            System.out.print("Хотите ввести еще одного сотрудника? (да/нет): ");
+            String response = scanner.nextLine();
+
+            if (response.equalsIgnoreCase("нет")) {
+                break;
             }
         }
-        System.out.printf("\n Минимальный локальный элемент: %d", min1);
+
+        // Выводим список сотрудников компании
+        company.displayEmployees();
+
+        scanner.close();
     }
 }
